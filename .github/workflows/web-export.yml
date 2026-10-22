@@ -1,0 +1,34 @@
+name: Godot web export
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  export:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - name: Export browser build
+        run: python3 scripts/build_web.py
+      - name: Check exported game files
+        run: |
+          test -s public/index.html
+          find public -maxdepth 1 -type f -printf '%f %s bytes\n' | sort
+          test -n "$(find public -maxdepth 1 -type f -name '*.wasm' -print -quit)"
+          test -n "$(find public -maxdepth 1 -type f -name '*.pck' -print -quit)"
+          if grep -qi 'A estrada muda com as estações' public/index.html; then
+            echo 'Presentation page unexpectedly remained in the web output.' >&2
+            exit 1
+          fi
+          du -sh public
+      - uses: actions/upload-artifact@v4
+        with:
+          name: sakura-rally-web
+          path: public/
+          retention-days: 1

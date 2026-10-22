@@ -618,7 +618,7 @@ func _save() -> void:
 ## window size is in pixels, which is a small window on a Retina display. Tool runs and the
 ## UI preview keep the sizes they set.
 func _fit_window() -> void:
-	if DisplayServer.get_name() == "headless":
+	if OS.has_feature("web") or DisplayServer.get_name() == "headless":
 		return
 	var area := DisplayServer.screen_get_usable_rect(DisplayServer.window_get_current_screen())
 	var k := minf(area.size.x / 16.0, area.size.y / 9.0) * 0.8
@@ -628,7 +628,7 @@ func _fit_window() -> void:
 
 
 func _apply_window_settings() -> void:
-	if DisplayServer.get_name() == "headless":
+	if OS.has_feature("web") or DisplayServer.get_name() == "headless":
 		return
 	var fs: bool = settings.get("fullscreen", false)
 	var want := DisplayServer.WINDOW_MODE_FULLSCREEN if fs else DisplayServer.WINDOW_MODE_WINDOWED

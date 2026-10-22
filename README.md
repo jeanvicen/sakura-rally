@@ -2,6 +2,8 @@
 
 # Sakura Rally 桜ラリー
 
+[Play the game in your browser](https://sakura-rally.vercel.app/) — desktop keyboard/gamepad or on-screen touch controls.
+
 A cel-shaded low-poly rally game for Summer Engine and Godot 4.7: two stages joined by a road
 through the seasons, in one world drawn like an anime background. Flat cel bands, shadows
 tinted violet instead of darkened, thin ink lines, painted clouds and aerial haze.
